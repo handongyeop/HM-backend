@@ -6,11 +6,11 @@ import com.humbleDev.HM.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
-@Controller
+@CrossOrigin
+@RestController
 public class MemberController {
     private final MemberService memberService;
 
@@ -32,6 +32,11 @@ public class MemberController {
     @GetMapping("/member/{id}")
     public ResponseEntity<?> findByID(@PathVariable Long id) {
         return new ResponseEntity<>(memberService.findById(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/member/login/{email}")
+    public ResponseEntity<?> findByEmail(@PathVariable String email) {
+        return new ResponseEntity<>(memberService.findByEmail(email), HttpStatus.OK);
     }
 
     @DeleteMapping("/member/{id}")

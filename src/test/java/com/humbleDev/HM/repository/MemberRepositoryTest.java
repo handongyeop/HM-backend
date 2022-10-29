@@ -45,4 +45,18 @@ public class MemberRepositoryTest {
         assertThat(member.getCreatedDate()).isAfter(now);
         assertThat(member.getModifiedDate()).isAfter(now);
     }
+
+    @Test
+    void findByEmail() {
+        String email = "test@naver.com";
+        String pw = "qlalfqjsgh";
+        String nick = "별명";
+        String phone = "010-1234-5678";
+        char isad = 'Y';
+
+        memberRepository.save(Member.builder().email(email).pw(pw).nick(nick).phone(phone).isad(isad).build());
+        Member user = memberRepository.findByEmail("test@naver.com");
+        System.out.println("번호 : " + user.getId() + ", 이메일 : " + user.getEmail()); ;
+    }
+
 }

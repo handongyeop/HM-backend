@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -30,7 +31,16 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public MemberResponseDto findById(Long id) {
-        Member entity = memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 회원이 없습니다."));
+        Member entity = memberRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원이 없습니다."));
+        return new MemberResponseDto(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public MemberResponseDto findByEmail(String email) {
+        Member entity = Optional
+                .ofNullable(memberRepository.findByEmail(email))
+                .orElseThrow(() -> new IllegalArgumentException("해당 회원이 없습니다."));
         return new MemberResponseDto(entity);
     }
 
